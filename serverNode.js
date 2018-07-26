@@ -9,7 +9,6 @@ app.get('/', function (req, res){
     res.sendFile(path.join(__dirname + '/index.html'));
 });
 
-
 /*
 	Access token and ID's are hardcoded for checking the broadcasted message in different channels. 
 	In case for big set of users, We suggest that each platform have seperate database for the user
@@ -75,11 +74,11 @@ app.post('/sendMessage', (req, res) => {
 	let botDetails = { name: '<YOURBOT>',
      id: '28:14c384d2-831...' };
 	let serviceUrl = 'https://smba.trafficmanager.net/apis/';
-    let address = {id, channelId, user, conversation, botDetails, serviceUrl};
-    var msg = new builder.Message().address(address);
-    msg.text(broadcastMessage);
-    msg.textLocale('en-US');
-    bot.send(msg);
+        let address = {id, channelId, user, conversation, botDetails, serviceUrl};
+        var msg = new builder.Message().address(address);
+        msg.text(broadcastMessage);
+        msg.textLocale('en-US');
+        bot.send(msg);
 
 	res.send('Message has been broadcast.');
 });
