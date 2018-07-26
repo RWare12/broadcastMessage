@@ -34,7 +34,7 @@ app.post('/sendMessage', (req, res) => {
 	 */
     const { TelegramClient } = require('messaging-api-telegram');
 	const client = TelegramClient.connect('<ACCESS_TOKEN>');
-	client.sendMessage(630541527, broadcastMessage, {
+	client.sendMessage('USER_ID', broadcastMessage, {
 		disable_web_page_preview: true,
 		disable_notification: true,
 	});
