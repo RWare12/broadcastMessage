@@ -19,7 +19,6 @@ app.post('/sendMessage', (req, res) => {
   
         messenger.sendTextMessage(2066657673406251, broadcastMessage, function (err, body) {
             if(err) return console.error(err)
-            console.log(body);
         });
 
     //Telegram push implementation
@@ -29,6 +28,14 @@ app.post('/sendMessage', (req, res) => {
 		disable_web_page_preview: true,
 		disable_notification: true,
 	});
+
+	//LINE push implementation
+	const { LineClient } = require('messaging-api-line');
+	const lineClient = LineClient.connect({
+		accessToken: 'SSNCPSWb+coEiOyImtsxyWVPmE794k0i4u8L3TqeWkePg6bo/Js4jcJGmxm6/mNOxlbCI9KTVsJvo85wOi7Sl94RpUATdMpnu4MOBYBHVkf0E0S9/l5NikVVY85pOs/yZD9nOjofic1+EAd6vXh/PgdB04t89/1O/w1cDnyilFU=',
+		channelSecret: 'a08de6ed48375aa45f1315bb2107a2ec',
+	});
+	lineClient.pushText('U31d231e97cb0a19698a693d6ceab0dfd', broadcastMessage);
 
 	res.send('Message has been broadcast.');
 });
