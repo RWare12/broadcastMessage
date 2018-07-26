@@ -24,7 +24,7 @@ app.post('/sendMessage', (req, res) => {
     let FBMessenger = require('fb-messenger');
     let messenger = new FBMessenger('<ACCESS_TOKEN>');
   
-        messenger.sendTextMessage('<USER_ID)', broadcastMessage, function (err, body) {
+        messenger.sendTextMessage('<USER_ID>', broadcastMessage, function (err, body) {
             if(err) return console.error(err)
         });
 
@@ -34,7 +34,7 @@ app.post('/sendMessage', (req, res) => {
 	 */
     const { TelegramClient } = require('messaging-api-telegram');
 	const client = TelegramClient.connect('<ACCESS_TOKEN>');
-	client.sendMessage('USER_ID', broadcastMessage, {
+	client.sendMessage('<USER_ID>', broadcastMessage, {
 		disable_web_page_preview: true,
 		disable_notification: true,
 	});
