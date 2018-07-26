@@ -54,7 +54,6 @@ app.post('/sendMessage', (req, res) => {
 	//Skype proactive message implementation
 	var restify = require('restify');
 	var builder = require('botbuilder');
-
 	/**
 	 * The appId and appPassword will be give at 'https://dev.botframework.com'
 	 */
@@ -72,7 +71,7 @@ app.post('/sendMessage', (req, res) => {
 	var user = { id: '29:1T1J6j38nSfaK...' };
 	let conversation = { id: '29:1T1J6j38n...' };
 	let botDetails = { name: '<YOURBOT>',
-     id: '28:14c384d2-831...' };
+   			  id: '28:14c384d2-831...' };
 	let serviceUrl = 'https://smba.trafficmanager.net/apis/';
         let address = {id, channelId, user, conversation, botDetails, serviceUrl};
         var msg = new builder.Message().address(address);
