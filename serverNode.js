@@ -37,6 +37,28 @@ app.post('/sendMessage', (req, res) => {
 	});
 	lineClient.pushText('U31d231e97cb0a19698a693d6ceab0dfd', broadcastMessage);
 
+	//Skype proactive message implementation
+	var restify = require('restify');
+	var builder = require('botbuilder');
+
+	var connector = new builder.ChatConnector({
+		appId: '14c384d2-831f-404c-847f-803879cffc5c',
+		appPassword: 'hrdLVQT4628=emhmOJK0]^%'
+	});
+	var bot = new builder.UniversalBot(connector);
+	let channelId = 'skype';
+	let id = '1532576785183';
+	var user = { id: '29:1T1J6j38nSfaKGop-f_bM4QdSi2HZKvf99o_agc_0Cf6J_DDbHriYZAHOJ0KP4M5v' };
+	let conversation = { id: '29:1T1J6j38nSfaKGop-f_bM4QdSi2HZKvf99o_agc_0Cf6J_DDbHriYZAHOJ0KP4M5v' };
+	let botDetails = { name: 'Jokes o00o',
+     id: '28:14c384d2-831f-404c-847f-803879cffc5c' };
+    let serviceUrl = 'https://smba.trafficmanager.net/apis/';
+    let address = {id, channelId, user, conversation, botDetails, serviceUrl};
+    var msg = new builder.Message().address(address);
+    msg.text(broadcastMessage);
+    msg.textLocale('en-US');
+    bot.send(msg);
+
 	res.send('Message has been broadcast.');
 });
 

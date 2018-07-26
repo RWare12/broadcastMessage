@@ -17,9 +17,11 @@
   },
   "homepage": "https://github.com/RWare12/broadcastMessage#readme",
   "dependencies": {
+    "botbuilder": "^3.15.0",
     "express": "^4.16.3",
     "fb-messenger": "^1.2.0",
     "messaging-api-line": "^0.7.4",
-    "messaging-api-telegram": "^0.7.4"
+    "messaging-api-telegram": "^0.7.4",
+    "restify": "^7.2.1"
   }
 }
