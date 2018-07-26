@@ -9,50 +9,72 @@ app.get('/', function (req, res){
     res.sendFile(path.join(__dirname + '/index.html'));
 });
 
+
+/*
+	Access token and ID's are hardcoded for checking the broadcasted message in different channels. 
+	In case for big set of users, We suggest that each platform have seperate database for the user
+	ID's and necessary requirements that is needed for push message.
+*/
+
 // This responds a POST request for the homepage
 app.post('/sendMessage', (req, res) => {
        
     // using fb-messenger api to send message to users
     let broadcastMessage = req.body.message;
     let FBMessenger = require('fb-messenger');
-    let messenger = new FBMessenger("EAAFpsSI1Pa8BAMqryJlniwRwu14cu62thAMbB65BFYZBI9Wo5kVXNI9WbQ9AxbJLhY7fttZCy1ZBN8FZCmolNDVpf5nqi0vMNrPMoeyZBAqiZBAaZBWvJXZBlv3ZCp65zIry13EPiq3kdT0chJCVellVMNRBTFtJUbJdv2fskX8p2tAZDZD");
+    let messenger = new FBMessenger('<ACCESS_TOKEN>');
   
-        messenger.sendTextMessage(2066657673406251, broadcastMessage, function (err, body) {
+        messenger.sendTextMessage('<USER_ID)', broadcastMessage, function (err, body) {
             if(err) return console.error(err)
         });
 
-    //Telegram push implementation
+	//Telegram push implementation
+	/**
+	 * access token will be given by the 'BotFather' from Telegram
+	 */
     const { TelegramClient } = require('messaging-api-telegram');
-	const client = TelegramClient.connect('696494774:AAHCl0iDVjrlW9SJKMrBGYH0Wg2derP_UDI');
+	const client = TelegramClient.connect('<ACCESS_TOKEN>');
 	client.sendMessage(630541527, broadcastMessage, {
 		disable_web_page_preview: true,
 		disable_notification: true,
 	});
 
 	//LINE push implementation
+	/**
+	 * accessToken and channelSecret will be at 'https://at.line.me/en/' upon signing in
+	 * go to Account->YourBot. The left panel go to Settings->Messaging API Settings then click on
+	 * Line Developers.
+	 */
 	const { LineClient } = require('messaging-api-line');
 	const lineClient = LineClient.connect({
-		accessToken: 'SSNCPSWb+coEiOyImtsxyWVPmE794k0i4u8L3TqeWkePg6bo/Js4jcJGmxm6/mNOxlbCI9KTVsJvo85wOi7Sl94RpUATdMpnu4MOBYBHVkf0E0S9/l5NikVVY85pOs/yZD9nOjofic1+EAd6vXh/PgdB04t89/1O/w1cDnyilFU=',
-		channelSecret: 'a08de6ed48375aa45f1315bb2107a2ec',
+		accessToken: '<ACCESS_TOKEN>',
+		channelSecret: '<CHANNEL_SECRET>',
 	});
-	lineClient.pushText('U31d231e97cb0a19698a693d6ceab0dfd', broadcastMessage);
+	lineClient.pushText('<USER_ID>', broadcastMessage);
 
 	//Skype proactive message implementation
 	var restify = require('restify');
 	var builder = require('botbuilder');
 
+	/**
+	 * The appId and appPassword will be give at 'https://dev.botframework.com'
+	 */
 	var connector = new builder.ChatConnector({
-		appId: '14c384d2-831f-404c-847f-803879cffc5c',
-		appPassword: 'hrdLVQT4628=emhmOJK0]^%'
+		appId: '<APP_ID>', 
+		appPassword: '<APP_PASSWORD>' 
 	});
 	var bot = new builder.UniversalBot(connector);
+	/**
+	 * Requirements for push message in Skype are the 'channelId', 'id', 'user', 'conversation'
+	 * and 'botDetails'.
+	 */
 	let channelId = 'skype';
-	let id = '1532576785183';
-	var user = { id: '29:1T1J6j38nSfaKGop-f_bM4QdSi2HZKvf99o_agc_0Cf6J_DDbHriYZAHOJ0KP4M5v' };
-	let conversation = { id: '29:1T1J6j38nSfaKGop-f_bM4QdSi2HZKvf99o_agc_0Cf6J_DDbHriYZAHOJ0KP4M5v' };
-	let botDetails = { name: 'Jokes o00o',
-     id: '28:14c384d2-831f-404c-847f-803879cffc5c' };
-    let serviceUrl = 'https://smba.trafficmanager.net/apis/';
+	let id = '1532...';
+	var user = { id: '29:1T1J6j38nSfaK...' };
+	let conversation = { id: '29:1T1J6j38n...' };
+	let botDetails = { name: '<YOURBOT>',
+     id: '28:14c384d2-831...' };
+	let serviceUrl = 'https://smba.trafficmanager.net/apis/';
     let address = {id, channelId, user, conversation, botDetails, serviceUrl};
     var msg = new builder.Message().address(address);
     msg.text(broadcastMessage);
