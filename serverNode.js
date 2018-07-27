@@ -17,9 +17,9 @@ app.post('/sendMessage', (req, res) => {
     let FBMessenger = require('fb-messenger');
     let messenger = new FBMessenger("EAAFpsSI1Pa8BAMqryJlniwRwu14cu62thAMbB65BFYZBI9Wo5kVXNI9WbQ9AxbJLhY7fttZCy1ZBN8FZCmolNDVpf5nqi0vMNrPMoeyZBAqiZBAaZBWvJXZBlv3ZCp65zIry13EPiq3kdT0chJCVellVMNRBTFtJUbJdv2fskX8p2tAZDZD");
   
-        messenger.sendTextMessage(2066657673406251, broadcastMessage, function (err, body) {
-            if(err) return console.error(err)
-        });
+    messenger.sendTextMessage(2066657673406251, broadcastMessage, function (err, body) {
+        if(err) return console.error(err)
+    });
 
     //Telegram push implementation
     const { TelegramClient } = require('messaging-api-telegram');
